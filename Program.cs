@@ -19,6 +19,13 @@ class Program{
 
     List<(double[] inputs, double target)> training_data = BuildTrainingData(prices, window_size);
 
-    NeuralNetwork network = 
+    NeuralNetwork network = new NeuralNetwork(input_size: 5, hidden_size: 4);
+
+    for (int i = 0; i<1000; i++){
+        double total_error=0;
+        foreach (var sample in training_data){
+            total_error += network.Train(sample.inputs, sample.target);
+        }
+    }
     }
 }
