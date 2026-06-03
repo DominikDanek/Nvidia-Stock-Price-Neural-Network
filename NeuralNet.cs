@@ -85,6 +85,20 @@ class NeuralNetwork{
             output_weights[h] += learning_rate *output_gradient *hidden_outputs[h];
         }
 
+        //update the output weights
+        for (int h = 0; h < hidden_outputs.Length; h++){
+            output_weights[h] += learning_rate *output_gradient *hidden_outputs[h];
+        }
+        for (int h = 0; h < hidden_outputs.Length; h++){
+            double hidden_gradient = output_gradient *output_weights[h] *SigmoidDerivative(hidden_outputs[h]);
+
+            for (int i = 0; i < inputs.Length; i++){
+                hidden_weights[h, i] += learning_rate *hidden_gradient *inputs[i];
+            }
+            hidden_biases[h] +=learning_rate *hidden_gradient;
+        }
+
+        return error * error;
     }
     double sigma(double x){
         return 1.0 / (1.0 + Math.Exp(-x));
