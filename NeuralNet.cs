@@ -79,10 +79,6 @@ class NeuralNetwork{
         //output gradient
         double output_gradient =error * sigmaDerivative(output);
 
-        for (int h = 0; h < hidden_outputs.Length; h++){
-            output_weights[h] += learning_rate *output_gradient *hidden_outputs[h];
-        }
-
         //update the output weights
         for (int h = 0; h < hidden_outputs.Length; h++){
             output_weights[h] += learning_rate *output_gradient *hidden_outputs[h];
