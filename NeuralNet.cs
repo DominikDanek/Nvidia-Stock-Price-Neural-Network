@@ -8,17 +8,14 @@ class NeuralNetwork{
     double output_bias;
     double learning_rate = 0.01;
     public NeuralNetwork(int input_size, int hidden_size){
-        //hidden weights
-        //hidden biases
-        //output weights
         hidden_weights = new double[hidden_size, input_size];
-        hideen_biases = new double[hidden_size];
+        hidden_biases = new double[hidden_size];
         output_weights = new double[hidden_size];
         initialiseWeights();
     }
     void initialiseWeights(){
-        for (int h = 0; h < GetLenght(0); h++){
-            for (int i = 0; i < GetLength(1); i++){
+        for (int h = 0; h < hidden_weights.GetLength(0); h++){
+            for (int i = 0; i < hidden_weights.GetLength(1); i++){
                 hidden_weights[h,i] = randomWeight();
             }
             hidden_biases[h] = randomWeight();
@@ -27,6 +24,7 @@ class NeuralNetwork{
         output_bias = randomWeight();
     }
     double randomWeight(){
+        Random random = new Random();
         return (random.NextDouble() *2) -1;
     }
     public double Forward(double[] inputs){
@@ -40,12 +38,12 @@ class NeuralNetwork{
                 sum +=inputs[i] * hidden_weights[h, i];
             }
             sum += hidden_biases[h];
-            hidden_outputs[h] = Sigmoid(sum);
+            hidden_outputs[h] = sigma(sum);
         }
         //output layer
         double output_sum = 0;
         for (int h = 0; h < hidden_outputs.Length; h++){
-            output_sum += hidden_outputs[h] * hidden_weights[h];
+            output_sum += hidden_outputs[h] * output_weights[h];
         }
         output_sum += output_bias;
 
@@ -64,12 +62,12 @@ class NeuralNetwork{
             }
             sum += hidden_biases[h];
 
-            hidden_outputs[h] = Sigmoid(sum);
+            hidden_outputs[h] = sigma(sum);
         }
         double output_sum = 0;
 
         for (int h= 0; h < hidden_outputs.Length; h++){
-            output_sum = hidden_outputs[h]*output_weights[h];
+            output_sum += hidden_outputs[h]*output_weights[h];
         }
 
         output_sum+= output_bias;
@@ -90,7 +88,7 @@ class NeuralNetwork{
             output_weights[h] += learning_rate *output_gradient *hidden_outputs[h];
         }
         for (int h = 0; h < hidden_outputs.Length; h++){
-            double hidden_gradient = output_gradient *output_weights[h] *SigmoidDerivative(hidden_outputs[h]);
+            double hidden_gradient = output_gradient *output_weights[h] *sigmaDerivative(hidden_outputs[h]);
 
             for (int i = 0; i < inputs.Length; i++){
                 hidden_weights[h, i] += learning_rate *hidden_gradient *inputs[i];

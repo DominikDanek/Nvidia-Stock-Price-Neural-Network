@@ -1,6 +1,9 @@
 using System;
-using Systsem.Collections.Generic;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
+using System.IO;
+
 //Tasks
 //5-6 neurons
 //construct own machine learning model without externa libraries
@@ -51,6 +54,21 @@ class Program{
         return prices;
     }
     static List<(double[] inputs, double target)> BuildTrainingData(List<double> prices, int window_size){
-        List<(double[] Inputs, double Target)> data = new();
+        List<(double[] inputs, double target)> data = new();
+        for (int i = 0; i < prices.Count - window_size - 1; i++){
+            double[] inputs = new double[window_size];
+            double first_price = prices[i];
+
+            // noramlise inputs
+            for (int j = 0; j < window_size; j++){
+                inputs[j] = prices[i+j]/first_price;
+            }
+            double current_price = prices[i + window_size-1];
+            double next_price = prices[i + window_size];
+
+            double target = next_price > current_price ? 1.0 : 0.0;
+            data.Add((inputs, target));
+        }
+        return data;
     }
 }
