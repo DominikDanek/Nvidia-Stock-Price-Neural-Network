@@ -24,12 +24,25 @@ class Program{
                 Console.WriteLine($"Epoch {i} error: {total_error:F4}");
             }
         }
-        Console.WriteLine("\n ---Predictions-- \n");
+        Console.WriteLine("\nEvaluation of Model performance:\n");
 
-        foreach (var sample in training_data.Take(10)){
-            double prediction = network.Forward(sample.inputs);
-            Console.WriteLine($"Prediction: {prediction:F4} | Target: {sample.target}");
+        int correct_predictions = 0;
+        int total = training_data.Count;
+
+        foreach (var sample in training_data){
+            double output = network.Forward(sample.inputs);
+
+            int predicted = output > 0.5 ? 1: 0;
+            int actual = sample.target > 0.5 ? 1: 0;
+
+            if (predicted == actual){
+                correct_predictions++;
+            }
         }
+        double accuracy = (double)correct_predictions/total * 100;
+        Console.WriteLine($"Correct prediction: {correct_predictions}/{total}");
+        Console.WriteLine($"Accuracy = {accuracy:F2}%");
+
     }
     static List<double> LoadPrices(string path){
         List<double> prices = new();
