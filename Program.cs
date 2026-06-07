@@ -4,15 +4,6 @@ using System.Globalization;
 using System.Linq;
 using System.IO;
 
-//Tasks
-//5-6 neurons
-//construct own machine learning model without externa libraries
-//use back propogation
-//output a percentage chance for a rise on a given day after analysing a of stock prices
-//check actual return
-//bounds : >0.5 = stock likely to go up, <0.5 = stock likely to go down
-//compare 
-
 namespace NvidiaStockPriceNeuralNetwork;
 
 class Program{
