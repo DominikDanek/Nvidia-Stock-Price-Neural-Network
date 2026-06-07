@@ -448,14 +448,12 @@ This project exposes the underlying mechanics.
 # Example Project Structure
 
 ```text
-/StockNNFromScratch
+/Nvidia-Stock-Price-Neural-Network
 │
 ├── Program.cs
 ├── NeuralNetwork.cs
-├── CsvLoader.cs
-├── TrainingSample.cs
-└── data/
-    └── stock_data.csv
+├── data.csv
+├── getting_data.py
 ```
 
 ---
