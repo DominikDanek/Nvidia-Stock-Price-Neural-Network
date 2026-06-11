@@ -11,25 +11,31 @@ class Program{
         List<double> prices = LoadPrices("data.csv"); // going to be the function to fetch the prices
         int window_size = 5;
 
-        List<(double[] inputs, double target)> training_data = BuildTrainingData(prices, window_size);
+        List<(double[] inputs, double target)> all_data = BuildTrainingData(prices, window_size);
+
+        int split = (int)(all_data.Count * 0.8); // 4:1 train/test split
+        List<(double[] inputs, double target)> train_set = all_data.Take(split).ToList();
+        List<(double[] inputs, double target)> test_set = all_data.Skip(split).ToList();
 
         NeuralNetwork network = new NeuralNetwork(input_size: 5, hidden_size: 4);
 
         for (int i = 0; i<1000; i++){
             double total_error=0;
-            foreach (var sample in training_data){
+            foreach (var sample in train_set){
                 total_error += network.Train(sample.inputs, sample.target);
             }
             if (i %100 == 0){
                 Console.WriteLine($"Epoch {i} error: {total_error:F4}");
+                //indicates how wrong the model was for each sample size
+                //if number decreases during itteration, indicates model is getting smarter
             }
         }
-        Console.WriteLine("\nEvaluation of Model performance:\n");
+        Console.WriteLine("\nEvaluation of Model performance on unseen data:\n");
 
         int correct_predictions = 0;
-        int total = training_data.Count;
+        int total = test_set.Count;
 
-        foreach (var sample in training_data){
+        foreach (var sample in test_set){
             double output = network.Forward(sample.inputs);
 
             int predicted = output > 0.5 ? 1: 0;

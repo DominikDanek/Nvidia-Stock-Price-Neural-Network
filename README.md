@@ -415,6 +415,13 @@ Over time:
 
 ---
 
+# Test/Train data Split
+- Using a 4:1 Train:Test split
+- Last 20% of data is used to test models performance
+- This is to prevent bias/overfitting of the network
+- Get a more accurate performance analysis
+
+---
 # Expected Limitations
 
 This project is intentionally simple.
@@ -477,11 +484,18 @@ Possible future additions:
 
 - C#
 - .NET
-- No external ML libraries
+- No external ML libraries, other that yfinance used to collect nvidida ticker data
 
 ---
 
-# Educational Purpose
+# Conclusions/ Final thoughts
 
-This repository exists to demonstrate the fundamentals of machine learning and neural networks through a fully manual implementation.
+- From my testing, I can get around ~55% accuracy with the current configurations.
+ Which is a concerningly significant edge to have. I will not be able to figure out, 
+ atleast with just a singular data set, whether the edge is persistent, or a fluke. What would 
+ interest me, is how the model would fare against other tech stocks, without being trained on them
+ .I could imagine that the model efficiency would differ radically, and even perform poorly on stocks in a different industry.
+ E.g real estate or something.
+
+
 
